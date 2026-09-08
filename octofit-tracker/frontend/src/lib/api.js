@@ -12,8 +12,11 @@ function getItems(payload) {
   return []
 }
 
-export async function fetchCollection(collection) {
-  const response = await fetch(`${API_BASE_URL}/${collection}/`)
+export async function fetchCollection(endpointOrCollection) {
+  const endpoint = endpointOrCollection.startsWith('http')
+    ? endpointOrCollection
+    : `${API_BASE_URL}/${endpointOrCollection}/`
+  const response = await fetch(endpoint)
   if (!response.ok) {
     throw new Error(`No se pudo cargar ${collection} (${response.status})`)
   }
